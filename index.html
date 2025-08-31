@@ -23,7 +23,7 @@
         <button class="btn" @click="toggleTheme" :aria-pressed="isDark">
           <span v-if="!isDark">🌙</span><span v-else>☀️</span> Theme
         </button>
-        <button class="btn" @click="printResume">🖨️ Print / Save PDF</button>
+        <button class="btn" @click="printResume" id="btnText" style="padding-left: 5em">🖨️ Print / Save PDF</button>
       </div>
     </header>
 
@@ -57,16 +57,6 @@
           <h2 class="section-title">Languages</h2>
           <ul class="list">
             <li v-for="lang in languages" :key="lang.name">{{ lang.name }} — {{ lang.level }}</li>
-          </ul>
-        </section>
-
-        <section class="card" v-if="certs.length">
-          <h2 class="section-title">Certifications</h2>
-          <ul class="list">
-            <li v-for="c in certs" :key="c.name">
-              <strong>{{ c.name }}</strong><span v-if="c.issuer"> — {{ c.issuer }}</span>
-              <span v-if="c.year"> ({{ c.year }})</span>
-            </li>
           </ul>
         </section>
       </aside>
@@ -133,11 +123,22 @@
             <span class="chip" v-for="i in interests" :key="i">{{ i }}</span>
           </div>
         </section>
+
+        <section class="card" v-if="certs.length">
+          <h2 class="section-title">Certifications</h2>
+          <ul class="list">
+            <li v-for="c in certs" :key="c.name">
+              <strong>{{ c.name }}</strong><span v-if="c.issuer"> — {{ c.issuer }}</span>
+              <span v-if="c.year"> ({{ c.year }})</span>
+            </li>
+          </ul>
+        </section>
+
       </main>
     </div>
 
     <footer class="container footer no-print">
-      <small>Built with Vue 3 • Edit <code>main.js</code> to customize your info</small>
+      <small>Built by Satwinder R. Jeerh. All rights reserved 2025.
     </footer>
   </div>
 

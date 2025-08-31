@@ -1,4 +1,3 @@
-/* -------------------- Root Theme Variables -------------------- */
 :root {
     --bg: #f9fafb;
     --card: #ffffff;
@@ -21,37 +20,62 @@
     --border: #334155;
   }
   
-  /* -------------------- Base -------------------- */
   * {
     box-sizing: border-box;
   }
   
+  #app{
+    margin-top: 3em;
+  }
   html,
   body {
-    height: 100%;
-    margin: 0;
-    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial,
-      sans-serif;
-    color: var(--text);
-    background: var(--bg);
-    line-height: 1.6;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  height: 100%;
+  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial,
+  sans-serif;
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
   }
   
-  /* -------------------- Layout -------------------- */
+  body.dark {
+  background: linear-gradient(135deg, #16213e 0%, #202a44 100%) no-repeat fixed;
+  }
+  
+  
   .container {
     width: min(1100px, 92%);
     margin: 0 auto;
   }
   
   .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 32px 0 20px;
-    border-bottom: 2px solid var(--border);
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 38px 22px 32px;
+  border-bottom: 3px solid var(--border);
+  background: linear-gradient(90deg, var(--accent) 0%, #5186f0 90%, #ffffff 160%);
+  color: #fff;
+  border-radius: 22px;
+  box-shadow: 0 3px 24px rgba(36, 58, 101, 0.10);
+  margin-bottom: 18px;
+  position: relative;
+}
+.header::before {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0; top: 18px; bottom: 18px;
+  width: 7px;
+  border-radius: 7px;
+  background: #fff5;
+  opacity: 1;
+}
+
+.header .name, .header .role {
+  color: #fff !important;
+}
   
   .grid {
     display: grid;
@@ -63,8 +87,8 @@
   
   .skills {
     display: flex;
-    flex-wrap: wrap;       /* allows wrapping to next line */
-    gap: 0.5rem;           /* spacing between ovals */
+    flex-wrap: wrap;       
+    gap: 0.5rem;           
     margin-top: 0.5rem;
   }
   
@@ -72,18 +96,49 @@
     background: var(--accent);
     color: white;
     padding: 0.4rem 0.8rem;
-    border-radius: 9999px; /* makes them pill-shaped */
+    border-radius: 9999px; 
     font-size: 0.85rem;
     font-weight: 500;
-    white-space: nowrap;   /* keeps text inside from breaking */
+    white-space: nowrap;   
   }
   
   
   @media (max-width: 900px) {
-    .grid {
-      grid-template-columns: 1fr;
-    }
+  .grid {
+    grid-template-columns: 1fr;
   }
+  .header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 18px 3vw 10px 3vw;
+    border-radius: 0 0 9px 9px;
+  }
+  .header::before {
+    left: 50%;
+    top: 4px;
+    bottom: 4px;
+    width: 8vw;
+    min-width: 2px;
+    max-width: 8px;
+    height: 6px;
+    border-radius: 4px;
+    background: var(--accent);
+    opacity: 0.6;
+    transform: translateX(-50%);
+  }
+  .actions {
+    justify-content: center;
+    margin-top: 7px;
+  }
+  .identity .name {
+    font-size: 22px;
+  }
+  .identity .role {
+    font-size: 14px;
+    margin-top: 2px;
+  }
+}
   
   .sidebar,
   .main {
@@ -92,7 +147,6 @@
     gap: 24px;
   }
   
-  /* -------------------- Cards -------------------- */
   .card {
     background: var(--card);
     border: 1px solid var(--border);
@@ -101,21 +155,64 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
     transition: background 0.3s ease, border-color 0.3s ease;
   }
-  
-  /* -------------------- Typography -------------------- */
-  .identity .name {
-    margin: 0;
-    font-size: clamp(32px, 5vw, 42px);
-    font-weight: 700;
-    color: var(--text);
+
+.fieldset-row {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  margin-top: 10px;
+  margin-bottom: 24px;
+}
+.fieldset-card {
+  flex: 1 1 0;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.07);
+  padding: 20px 20px 18px 20px;
+  min-width: 0;
+  margin: 0;
+  position: relative;
+}
+.fieldset-card legend {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 0 10px;
+  margin-left: 12px;
+  margin-bottom: 0.8em;
+  background: var(--card);
+  border-radius: .5em;
+  letter-spacing: 0.01em;
+}
+.fieldset-card ul {
+  margin: 12px 0 0 0;
+  padding: 0;
+  list-style: none;
+}
+@media (max-width: 900px) {
+  .fieldset-row {
+    flex-direction: column;
+    gap: 16px;
   }
+}
+  
+  .identity .name {
+  margin: 0;
+  font-size: clamp(29px, 5vw, 37px);
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.015em;
+  line-height: 1.07;
+}
   
   .identity .role {
-    margin: 6px 0 0;
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 18px;
-  }
+  margin: 3px 0 0 1px;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 17px;
+  letter-spacing: 0.01em;
+}
   
   .section-title {
     margin: 0 0 16px;
@@ -149,52 +246,67 @@
     margin: 0.25rem 0 0;
   }
   
-  /* -------------------- Buttons -------------------- */
   .actions {
-    display: flex;
-    gap: 0.75rem;
-  }
+  display: flex;
+  gap: 0.5rem;
+  z-index: 2;
+}
   
   .btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: var(--accent);
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    padding: 0.6rem 1.2rem;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s ease, transform 0.1s ease,
-      box-shadow 0.2s ease;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  }
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--card);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.38rem 4rem 0.38rem 1.5rem;
+  font-size: 0.91rem;
+  font-weight: 550;
+  cursor: pointer;
+  line-height: 1.2;
+  min-height: unset;
+  min-width: 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.11);
+  transition: background 0.18s, box-shadow 0.2s, transform 0.1s;
+}
+.btnText{
+  margin-left: 3em;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  background: var(--accent-hover);
+  box-shadow: 0 2px 7px rgba(36, 58, 101, 0.17);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  background: var(--accent);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.11);
+  transform: none;
+}
   
-  .btn:hover {
-    background: var(--accent-hover);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-  }
-  
-  .btn:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-  }
-  
-  /* -------------------- Tags / Chips -------------------- */
   .chip {
     display: inline-block;
-    padding: 0.3rem 0.7rem;
+    padding: 0.38rem 1.05rem;
     border-radius: 999px;
     background: var(--chip);
     border: 1px solid var(--border);
-    font-size: 0.85rem;
+    font-size: 0.93rem;
     font-weight: 500;
-  }
+    margin: 0.22rem 0.32rem 0.22rem 0;
+    letter-spacing: 0.01em;
+    transition: background 0.2s, border 0.2s;
+}
+
+.tags, .skill-tags, .tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 0.4rem;
+  margin: 0.5em 0 0.6em 0;
+}
   
-  /* -------------------- Experience -------------------- */
   .xp-head {
     display: flex;
     align-items: flex-start;
@@ -230,7 +342,6 @@
     margin: 0.2rem 0;
   }
   
-  /* -------------------- Education -------------------- */
   .edu-degree {
     margin: 0.2rem 0;
     font-weight: 600;
@@ -242,7 +353,6 @@
     color: var(--muted);
   }
   
-  /* -------------------- Footer -------------------- */
   .footer {
     text-align: center;
     padding: 24px 0 48px;
@@ -250,7 +360,6 @@
     font-size: 14px;
   }
   
-  /* -------------------- Print -------------------- */
   @media print {
     body {
       background: #ffffff !important;
@@ -278,3 +387,19 @@
     }
   }
   
+
+body:not(.dark) .header {
+  background: linear-gradient(90deg, #fafdff 0%, #e7edfa 70%, #dee8fb 100%);
+  color: #1a284d;
+}
+body:not(.dark) .header .name,
+body:not(.dark) .header .role {
+  color: #234087 !important;
+}
+body:not(.dark) .header::before {
+  background: var(--accent);
+  opacity: 0.16;
+}
+body:not(.dark) .btn {
+  color: #181d24 !important;
+}

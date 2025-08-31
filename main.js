@@ -38,7 +38,7 @@ createApp({
             "Joined multiple coding events in the university",
             "Joined multiple organizations, especially Code Geeks"
                     ],
-          tech: ["Python", "Java", "HTML", "CSS", "Tailwind css", "Linux", "Javascript", "PHP", "No/SQL", ""]
+          tech: ["Python", "Java", "HTML", "CSS", "Tailwind CSS", "Linux", "JavaScript", "PHP", "NoSQL"]
         },
       ],
 
@@ -51,9 +51,9 @@ createApp({
         },
         {
           name: "Self-made Finance Database",
-          description: "Node CLI to compress and convert images for the web.",
+          description: "A whole database that I made from scratch that can add, remove, and store data inside specified weeks on a year. It also computes & graphs the data if the person wants to.",
           tech: ["Python"],
-          links: [{ label: "GitHub", url: "A whole database that I made from scratch that can add, remove, and store data inside specified weeks on a year. It also computes & graphs the data if the person wants to.          " }]
+          links: [{ label: "GitHub", url: "https://github.com/Satwinder-stack/self-made-finance-database-" }]
         }
       ],
       education: [
@@ -63,7 +63,7 @@ createApp({
           location: "Angeles, Philippines",
           start: "2023-06",
           end: "present",
-          details: "Consistent lister, 1-time president's lister, 3-time dean's lister"
+          details: "Consistent lister, 1-time president's lister, 3-time dean's lister. Also joined multiple coding events and seminars related to technology during my 2 years."
         }
       ],
       certs: [
@@ -101,21 +101,26 @@ createApp({
       window.print();
     },
     formatRange(start, end) {
-        if (!start) return "";
-        const fmt = (s) => {
-          const [y, m] = s.split("-");
-          const date = new Date(Number(y), Number(m ? m - 1 : 0), 1);
-          return date.toLocaleString(undefined, { month: "short", year: "numeric" });
-        };
-        let range = `${fmt(start)} — ${end && end !== "Present" ? fmt(end) : "Present"}`;
-        let dur = this.duration(start, end);
-        return dur ? `${range} | ${dur}` : range;
+      if (!start) return "";
+      const isPresent = (val) => val && val.toLowerCase() === "present";
+      const fmt = (s) => {
+        if (!s || isPresent(s)) return "Present";
+        const [y, m] = s.split("-");
+        const date = new Date(Number(y), Number(m ? m - 1 : 0), 1);
+        if (isNaN(date.getTime())) return "";
+        return date.toLocaleString(undefined, { month: "short", year: "numeric" });
+      };
+      let range = `${fmt(start)} — ${isPresent(end) ? "Present" : fmt(end)}`;
+      let dur = this.duration(start, end);
+      return dur ? `${range} | ${dur}` : range;
     },
 
     duration(start, end) {
       if (!start) return "";
+      const isPresent = (val) => val && val.toLowerCase() === "present";
       const s = new Date(start + "-01");
-      const e = end && end !== "Present" ? new Date(end + "-01") : new Date();
+      const e = end && !isPresent(end) ? new Date(end + "-01") : new Date();
+      if (isNaN(s.getTime()) || isNaN(e.getTime()) || e < s) return "";
       let months = (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth());
       const years = Math.floor(months / 12);
       months = months % 12;
