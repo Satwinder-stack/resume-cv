@@ -1,13 +1,146 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + Vue</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <title>Online Resume — Vue.js</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="style.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+  <div id="app" :class="[{dark:isDark}]">
+    <header class="container header">
+      <div class="identity">
+        <h1 class="name">{{ profile.name }}</h1>
+        <p class="role">{{ profile.title }}</p>
+        <div class="tags">
+          <span v-for="t in profile.tags" :key="t" class="chip">{{ t }}</span>
+        </div>
+      </div>
+      <div class="actions no-print">
+        <button class="btn" @click="toggleTheme" :aria-pressed="isDark">
+          <span v-if="!isDark">🌙</span><span v-else>☀️</span> Theme
+        </button>
+        <button class="btn" @click="printResume">🖨️ Print / Save PDF</button>
+      </div>
+    </header>
+
+    <div class="container grid">
+      <aside class="sidebar">
+        <section class="card">
+          <h2 class="section-title">Contact</h2>
+          <ul class="list">
+            <li v-if="profile.location">📍 {{ profile.location }}</li>
+            <li v-if="profile.email">✉️ <a :href="'mailto:'+profile.email">{{ profile.email }}</a></li>
+            <li v-if="profile.phone">📞 <a :href="'tel:'+profile.phone">{{ profile.phone }}</a></li>
+            <li v-for="l in profile.links" :key="l.label">
+              🔗 <a :href="l.url" target="_blank" rel="noreferrer">{{ l.label }}</a>
+            </li>
+          </ul>
+        </section>
+
+        <section class="card" v-if="skills.length">
+          <h2 class="section-title">Skills</h2>
+          <div class="skills">
+            <div class="skill-group" v-for="cat in skills" :key="cat.category">
+              <h3 class="skill-title">{{ cat.category }}</h3>
+              <div class="skill-tags">
+                <span v-for="s in cat.items" :key="s" class="chip">{{ s }}</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card" v-if="languages.length">
+          <h2 class="section-title">Languages</h2>
+          <ul class="list">
+            <li v-for="lang in languages" :key="lang.name">{{ lang.name }} — {{ lang.level }}</li>
+          </ul>
+        </section>
+
+        <section class="card" v-if="certs.length">
+          <h2 class="section-title">Certifications</h2>
+          <ul class="list">
+            <li v-for="c in certs" :key="c.name">
+              <strong>{{ c.name }}</strong><span v-if="c.issuer"> — {{ c.issuer }}</span>
+              <span v-if="c.year"> ({{ c.year }})</span>
+            </li>
+          </ul>
+        </section>
+      </aside>
+
+      <!-- Main -->
+      <main class="main">
+        <section class="card" v-if="profile.summary">
+          <h2 class="section-title">Summary</h2>
+          <p class="summary">{{ profile.summary }}</p>
+        </section>
+
+        <section class="card" v-if="experience.length">
+          <h2 class="section-title">Experience</h2>
+          <article class="xp" v-for="job in experience" :key="job.company + job.title">
+            <header class="xp-head">
+              <div>
+                <h3 class="xp-role">{{ job.title }}</h3>
+                <p class="xp-company">{{ job.company }} <span v-if="job.location">• {{ job.location }}</span></p>
+              </div>
+              <div class="xp-dates">
+                <p>{{ formatRange(job.start, job.end) }}</p>
+              </div>
+            </header>
+            <ul class="bullets">
+              <li v-for="(b,i) in job.bullets" :key="i">{{ b }}</li>
+            </ul>
+            <div class="tech" v-if="job.tech?.length">
+              <span class="chip" v-for="t in job.tech" :key="t">{{ t }}</span>
+            </div>
+          </article>
+        </section>
+
+        <section class="card" v-if="projects.length">
+          <h2 class="section-title">Projects</h2>
+          <article class="proj" v-for="p in projects" :key="p.name">
+            <div class="proj-head">
+              <h3 class="proj-name">{{ p.name }}</h3>
+              <div class="proj-links" v-if="p.links?.length">
+                <a v-for="lnk in p.links" :key="lnk.label" :href="lnk.url" target="_blank" rel="noreferrer">{{ lnk.label }}</a>
+              </div>
+            </div>
+            <p class="proj-desc">{{ p.description }}</p>
+            <div class="tech" v-if="p.tech?.length">
+              <span class="chip" v-for="t in p.tech" :key="t">{{ t }}</span>
+            </div>
+          </article>
+        </section>
+
+        <section class="card" v-if="education.length">
+          <h2 class="section-title">Education</h2>
+          <article class="edu" v-for="e in education" :key="e.school + e.degree">
+            <div class="edu-head">
+              <h3 class="edu-degree">{{ e.degree }}</h3>
+              <span class="edu-dates">{{ formatRange(e.start, e.end) }}</span>
+            </div>
+            <p class="edu-school">{{ e.school }} <span v-if="e.location">• {{ e.location }}</span></p>
+            <p class="muted" v-if="e.details">{{ e.details }}</p>
+          </article>
+        </section>
+
+        <section class="card" v-if="interests.length">
+          <h2 class="section-title">Interests</h2>
+          <div class="tech">
+            <span class="chip" v-for="i in interests" :key="i">{{ i }}</span>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="container footer no-print">
+      <small>Built with Vue 3 • Edit <code>main.js</code> to customize your info</small>
+    </footer>
+  </div>
+
+  <script src="main.js"></script>
+</body>
 </html>

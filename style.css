@@ -1,0 +1,280 @@
+/* -------------------- Root Theme Variables -------------------- */
+:root {
+    --bg: #f9fafb;
+    --card: #ffffff;
+    --text: #1f2937;
+    --muted: #6b7280;
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --chip: #eef2ff;
+    --border: #e5e7eb;
+  }
+  
+  .dark {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --accent: #3b82f6;
+    --accent-hover: #60a5fa;
+    --chip: #334155;
+    --border: #334155;
+  }
+  
+  /* -------------------- Base -------------------- */
+  * {
+    box-sizing: border-box;
+  }
+  
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial,
+      sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  /* -------------------- Layout -------------------- */
+  .container {
+    width: min(1100px, 92%);
+    margin: 0 auto;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 32px 0 20px;
+    border-bottom: 2px solid var(--border);
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 24px;
+  }
+  
+  .skills {
+    display: flex;
+    flex-wrap: wrap;       /* allows wrapping to next line */
+    gap: 0.5rem;           /* spacing between ovals */
+    margin-top: 0.5rem;
+  }
+  
+  .skill {
+    background: var(--accent);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 9999px; /* makes them pill-shaped */
+    font-size: 0.85rem;
+    font-weight: 500;
+    white-space: nowrap;   /* keeps text inside from breaking */
+  }
+  
+  
+  @media (max-width: 900px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  .sidebar,
+  .main {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  /* -------------------- Cards -------------------- */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  
+  /* -------------------- Typography -------------------- */
+  .identity .name {
+    margin: 0;
+    font-size: clamp(32px, 5vw, 42px);
+    font-weight: 700;
+    color: var(--text);
+  }
+  
+  .identity .role {
+    margin: 6px 0 0;
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 18px;
+  }
+  
+  .section-title {
+    margin: 0 0 16px;
+    font-size: 20px;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 6px;
+  }
+  
+  .list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.45rem;
+  }
+  
+  a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+  }
+  
+  .summary {
+    font-size: 15.5px;
+    margin: 0.25rem 0 0;
+  }
+  
+  /* -------------------- Buttons -------------------- */
+  .actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease,
+      box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  
+  .btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  }
+  
+  .btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* -------------------- Tags / Chips -------------------- */
+  .chip {
+    display: inline-block;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: var(--chip);
+    border: 1px solid var(--border);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+  
+  /* -------------------- Experience -------------------- */
+  .xp-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  
+  .xp-role {
+    margin: 0.2rem 0;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  
+  .xp-company {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  
+  .xp-dates {
+    text-align: right;
+    font-size: 14px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  
+  .bullets {
+    margin: 0.4rem 0 0;
+    padding-left: 1.1rem;
+  }
+  
+  .bullets li {
+    margin: 0.2rem 0;
+  }
+  
+  /* -------------------- Education -------------------- */
+  .edu-degree {
+    margin: 0.2rem 0;
+    font-weight: 600;
+  }
+  
+  .edu-school {
+    margin: 0;
+    font-size: 14.5px;
+    color: var(--muted);
+  }
+  
+  /* -------------------- Footer -------------------- */
+  .footer {
+    text-align: center;
+    padding: 24px 0 48px;
+    color: var(--muted);
+    font-size: 14px;
+  }
+  
+  /* -------------------- Print -------------------- */
+  @media print {
+    body {
+      background: #ffffff !important;
+      color: #000000 !important;
+    }
+  
+    .no-print {
+      display: none !important;
+    }
+  
+    .grid {
+      grid-template-columns: 1fr 2fr;
+      gap: 16px;
+    }
+  
+    .card {
+      box-shadow: none;
+      background: #ffffff !important;
+      border: 1px solid #ddd !important;
+    }
+  
+    a {
+      color: #000000 !important;
+      text-decoration: none;
+    }
+  }
+  
